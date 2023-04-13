@@ -2,35 +2,47 @@ package bg.tu_varna.sit.f21621556.implementations;
 
 import bg.tu_varna.sit.f21621556.contracts.Command;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class OpenCommand implements Command {
-    private String fileName;
-    private String fileContent;
+    private ArrayList<String> fileContents;
 
-    public OpenCommand(String fileName) {
-        this.fileName = fileName;
-        this.fileContent = "";
+    public OpenCommand() {
+        fileContents = new ArrayList<>();
     }
-
     @Override
     public void execute(String fileName) {
-        try {
-            this.fileContent = new String(Files.readAllBytes(Paths.get(fileName)));
-            System.out.println("Successfully loaded " + fileName + " into memory");
-            this.fileName = fileName;
-        } catch (IOException e) {
-            System.out.println("There is a problem. The file is not opened: " + e.getMessage());
+        File file = new File(fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                System.out.println("File created: " + fileName);
+            } catch (IOException e) {
+                System.out.println("Error creating file: " + e.getMessage());
+                return;
+            }
+        }
+        else
+        {
+            try (BufferedReader br = new BufferedReader(new FileReader(fileName)))
+            {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    fileContents.add(line);
+                }
+                System.out.println("Successfully opened "+fileName);
+            } catch (IOException e) {
+                System.out.println("Error reading file: " + e.getMessage());
+            }
         }
     }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public String getFileContent() {
-        return fileContent;
+    public ArrayList<String> getFileContents() {
+        return fileContents;
     }
 }
+//Чете от посочения файл и записва информацията в списък, ако няма такъв файл, то той се създава, после ако искаме да прочетем от този файл
+//пак с open и вече се отваря и чете от информацията
