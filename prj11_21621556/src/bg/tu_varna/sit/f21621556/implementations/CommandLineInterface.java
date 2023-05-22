@@ -1,15 +1,20 @@
 package bg.tu_varna.sit.f21621556.implementations;
 
+import bg.tu_varna.sit.f21621556.CheckInCommand;
 import bg.tu_varna.sit.f21621556.contracts.Command;
+import bg.tu_varna.sit.f21621556.contracts.CommandHotel;
+import bg.tu_varna.sit.f21621556.entities.Hotel;
 
 import java.util.*;
 
 public class CommandLineInterface {
     protected static Map<String, Command> commands;
+    protected static Map<String, CommandHotel> commandsHotel;
     private String currentFile;
     private List<String>fileContents = new ArrayList<>();
-
-    public CommandLineInterface() {
+    private Hotel hotel;
+    public CommandLineInterface(Hotel hotel) {
+        this.hotel=hotel;
         commands=new HashMap<>();
         commands.put("open",new OpenCommand());
         commands.put("close",new CloseCommand());
@@ -17,6 +22,10 @@ public class CommandLineInterface {
         commands.put("saveas",new SaveAsCommand());
         commands.put("help",new HelpCommand());
         commands.put("exit",new ExitCommand());
+
+        commandsHotel=new HashMap<>();
+        commandsHotel.put("checkin", new CheckInCommand());
+
     }
 
     public void run(){
@@ -40,7 +49,7 @@ public class CommandLineInterface {
                     currentFile = fileName;
                     System.out.println("Сегашният файл е "+currentFile);
 
-                    //Съдържанието какво е от прочетения файл
+                    //Съдържанието - какво е от прочетения файл
                     System.out.println("File contents: ");
                     fileContents = ((OpenCommand) commands.get("open")).getFileContents();
                     System.out.println(fileContents);
@@ -86,6 +95,19 @@ public class CommandLineInterface {
                 case "exit":
                 {
                     commands.get("exit").execute(null);
+                }
+                break;
+                case "checkin":
+                {
+                   commandsHotel.get("checkin").execute(fileContents,commandArguments,hotel);
+                }
+                break;
+                case "print":
+                {
+                    //Помощна - докато пиша кода
+                    System.out.println("File contents: ");
+                    fileContents = ((OpenCommand) commands.get("open")).getFileContents();
+                    System.out.println(fileContents);
                 }
                 break;
             }
