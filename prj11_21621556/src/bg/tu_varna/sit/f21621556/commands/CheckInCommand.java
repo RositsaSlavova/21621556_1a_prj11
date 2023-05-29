@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.f21621556;
+package bg.tu_varna.sit.f21621556.commands;
 
 import bg.tu_varna.sit.f21621556.contracts.CommandHotel;
 import bg.tu_varna.sit.f21621556.entities.Hotel;
@@ -7,7 +7,7 @@ import bg.tu_varna.sit.f21621556.entities.Room;
 import java.util.List;
 
 public class CheckInCommand implements CommandHotel {
-    private Hotel hotel;
+    //private Hotel hotel;
     private List<String> roomList;
     private String roomNumber;
     private String fromDate;

@@ -24,10 +24,4 @@ public class Room {
     public boolean isAvailability() {
         return availability;
     }
-
-    public Room(String number, int bedsNumber, boolean availability) {
-        this.number = number;
-        this.bedsNumber = bedsNumber;
-        this.availability = availability;
-    }
 }
