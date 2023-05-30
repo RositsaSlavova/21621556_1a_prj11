@@ -2,6 +2,7 @@ package bg.tu_varna.sit.f21621556.implementations;
 
 import bg.tu_varna.sit.f21621556.commands.AvailabilityCommand;
 import bg.tu_varna.sit.f21621556.commands.CheckInCommand;
+import bg.tu_varna.sit.f21621556.commands.CheckOutCommand;
 import bg.tu_varna.sit.f21621556.contracts.Command;
 import bg.tu_varna.sit.f21621556.contracts.CommandHotel;
 import bg.tu_varna.sit.f21621556.entities.Hotel;
@@ -27,6 +28,7 @@ public class CommandLineInterface {
         commandsHotel=new HashMap<>();
         commandsHotel.put("checkin", new CheckInCommand());
         commandsHotel.put("availability", new AvailabilityCommand());
+        commandsHotel.put("checkout", new CheckOutCommand());
 
     }
 
@@ -107,6 +109,11 @@ public class CommandLineInterface {
                 case "availability":
                 {
                     commandsHotel.get("availability").execute(fileContents,commandArguments,hotel);
+                }
+                break;
+                case "checkout":
+                {
+                    commandsHotel.get("checkout").execute(fileContents,commandArguments,hotel);
                 }
                 break;
                 case "print":

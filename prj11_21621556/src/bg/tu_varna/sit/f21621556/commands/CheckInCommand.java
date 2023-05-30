@@ -18,7 +18,7 @@ public class CheckInCommand implements CommandHotel {
     @Override
     public void execute(List<String> roomList, String[] command, Hotel hotel) {
         if (roomList.isEmpty()) {
-            System.out.println("Nothing to save. Please open a file and add some content first.");
+            System.out.println("Please open a file and add some content first.");
             return;
         }
         if(command.length<5){
